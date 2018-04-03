@@ -55,9 +55,14 @@ def main():
 	Label(root, text="G_s").grid(row=12, column=0)
 	e_Gs = Entry(root)
 	e_Gs.grid(row=12, column=1)
+
+	Label(root, text="计算精度,4位小数").grid(row=13, column=0)
+	e_accuracy = Entry(root)
+	e_accuracy.grid(row=13, column=1)
 	
 	def calc():		
-		ans = [i/1000.0 for i in range(1, 100000)]
+		ans = [i/10000.0 for i in range(1, 10000)]
+		num = 1
 		for x in ans:
 			# ---A-----------------------------
 			alpha = float(e_alpha.get())/180*math.pi
@@ -94,17 +99,21 @@ def main():
 			ln2 = AzyG*(1+2*(1-sinfai)*((yzS*eDdd/AzyG)**sinfai))
 			# --------------------------------
 
-			if (ln1>0) and (ln2>0) and abs(a1*(math.log(ln1)-math.log(ln2))-x) < 100:
+			accuracy = float(e_accuracy.get())
+
+			if (ln1>0) and (ln2>0) and abs(a1*(math.log(ln1)-math.log(ln2))-x) < accuracy:
+				print(num)
+				num += 1
 				print('A =',A)
 				print('delta_Dr = '+str(a1)+'*(ln'+str(ln1)+')-(ln'+str(ln2)+')')
 				print('delta_Dr = ', x )
 				print('================================================')
-				break
+				
+		print('Done\n')
 
+	Button(root, text="计算", width=10,command=calc).grid(row=14, column=0, sticky=W, padx=10, pady=5)
 
-	Button(root, text="计算", width=10,command=calc).grid(row=13, column=0, sticky=W, padx=10, pady=5)
-
-	Button(root, text="关闭", width=10, command=root.quit).grid(row=13, column=1, sticky=E, padx=10, pady=5)
+	Button(root, text="关闭", width=10, command=root.quit).grid(row=14, column=1, sticky=E, padx=10, pady=5)
 
 	mainloop()
 
