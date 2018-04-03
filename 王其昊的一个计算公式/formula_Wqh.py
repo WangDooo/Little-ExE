@@ -3,7 +3,6 @@ from sympy import *
 import math
 from scipy.optimize import fsolve
 
-
 def main():
  	 
 	root = Tk()
@@ -94,11 +93,11 @@ def main():
 		AzyG = A*z*yw*(Gs-1)
 		ln2 = AzyG*(1+2*(1-sinfai)*((yzS*eDdd/AzyG)**sinfai))
 		# --------------------------------	
-
-		
+		print('A =',A)
+		print('delta_Dr = '+str(a1)+'*(ln'+str(ln1)+')-(ln'+str(ln2)+')')
 		ans = solve(a1*(log(ln1)-log(ln2))-x, x)
-		print(ans)
-
+		print('delta_Dr = ',ans)
+		print('================================================')
 
 
 	Button(root, text="计算", width=10,command=calc).grid(row=13, column=0, sticky=W, padx=10, pady=5)
