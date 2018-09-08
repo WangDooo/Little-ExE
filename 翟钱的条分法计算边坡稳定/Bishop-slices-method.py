@@ -45,4 +45,8 @@ def side_top(x):
 		y = y_B
 	return y
 
-print(side_top(17.5))
+# print(side_top(17.5))
+
+print(circle_center(45,0))
+a = circle_center(45,0)
+print(circle_radius(a))
