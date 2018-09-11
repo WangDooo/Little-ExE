@@ -41,13 +41,16 @@ def circle_radius(center,B_x,B_y):
 
 # 上边界的分段函数表达式
 def side_top(x,A_x,A_y,B_x,B_y,alpha_slope):
-	if x <= A_x:
-		y = A_y
-	elif x > A_x and x <= B_x:
-		y = math.tan((180-alpha_slope)/180*math.pi)*(x-A_x)+A_y
-	elif x > B_x:
-		y = B_y
-	return y
+	y_top = []
+	for i in x:
+		if i <= A_x:
+			y = A_y
+		elif i > A_x and i <= B_x:
+			y = math.tan((180-alpha_slope)/180*math.pi)*(i-A_x)+A_y
+		elif i > B_x:
+			y = B_y
+		y_top.append(y)
+	return y_top
 
 # 圆弧与左侧坡上地面的交点 横坐标值
 def point_left(center,radius,A_y): # center 是 [x,y]
@@ -78,3 +81,14 @@ def slice_x(point_left,point_right,N):
 		temp += single_width
 	return x
 
+
+# 圆弧分段交点
+def side_bottom(slice_x,center,radius):
+	a = center[0] # 圆 (x-a)**2+(y-b)**2 = r**2
+	b = center[1]
+	r = radius
+	side_bottom = []
+	for x in slice_x:
+		y = Symbol('y')
+		side_bottom.append(min(solve((x-a)**2+(y-b)**2-r**2,y)))
+	return  side_bottom

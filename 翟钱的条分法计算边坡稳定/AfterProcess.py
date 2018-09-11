@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
+from PreProcess import *
 
-def draw_slope(c):
+def draw_slope(c,center,slice_x,radius):
 	ax = plt.subplot(111) # 一般都在ax中设置,不再plot中设置
-	# 绘制边坡外框
 	plt.title('Bishop', size=14)
-
+	# 绘制边坡外框
 	x_slope = [ [0,0],
 				[0,c['A_x']],
 				[c['A_x'],c['B_x']],
@@ -17,10 +17,36 @@ def draw_slope(c):
 				[c['height_right'],c['height_right']],
 				[c['height_right'],0],
 				[0,0]] 
-
-	print([c['A_x'],c['A_y']],[c['B_x'],c['B_y']])
 	for i in range(len(x_slope)):
 		plt.plot(x_slope[i],y_slope[i], color='r')
 		plt.scatter(x_slope[i],y_slope[i], color='b')
 
+	# 绘制半径
+	x_radius = [[slice_x[0],center[0]],[slice_x[-1],center[0]]]
+	y_radius = [[c['height_left'],center[1]],[c['height_right'],center[1]]]
+	for i in range(len(x_radius)):
+		plt.plot(x_radius[i],y_radius[i], color='black')
+	# 绘制圆心
+	plt.scatter(center[0],center[1], color='g')
+	# 绘制圆弧（以直代曲）
+	side_b = side_bottom(slice_x,center,radius)
+	x_arc = [[slice_x[0],slice_x[1]]]
+	y_arc = [[side_b[0],side_b[1]]]
+	for i in range(len(slice_x)-1):
+		x_arc.append([slice_x[i],slice_x[i+1]])
+		y_arc.append([side_b[i],side_b[i+1]])
+	for i in range(len(x_arc)):
+		plt.plot(x_arc[i],y_arc[i], color='black')
+	# 绘制分条线
+	# side_top(x,A_x,A_y,B_x,B_y,alpha_slope)
+	side_t = side_top(slice_x,c['A_x'],c['A_y'],c['B_x'],c['B_y'],c['alpha_slope'])
+	side_b = side_bottom(slice_x,center,radius)
+	x_line = [[slice_x[0],slice_x[0]]]
+	y_line = [[side_b[0],side_t[0]]]
+	for i in range(len(slice_x)):
+		x_line.append([slice_x[i],slice_x[i]])
+		y_line.append([side_b[i],side_t[i]])
+	for i in range(len(x_line)):
+		plt.plot(x_line[i],y_line[i], color='y',linestyle='-')
+	# 显示
 	plt.show()
