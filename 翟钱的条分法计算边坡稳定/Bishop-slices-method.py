@@ -1,4 +1,5 @@
 from PreProcess import *
+from AfterProcess import *
 
 # 边坡尺寸参数设定
 H = 5
@@ -27,3 +28,5 @@ point_right = point_right(center,R,c['B_y'])
 # def slice_x(point_left,point_right,N)
 slice_x = slice_x(point_left,point_right,c['N'])
 print(slice_x)
+# def draw_slope(c):
+draw_slope(c)

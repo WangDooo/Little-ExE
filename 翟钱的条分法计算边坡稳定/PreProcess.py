@@ -8,7 +8,6 @@ def coordinate(H,alpha_slope,c_effective,phi_effective,N):
 	height_left = 3*H
 	height_right = 2*H
 	height_slope = abs(height_left-height_right)
-	alpha_slope = 45
 	width_top = 3*H
 	width_bottom = 6*H+H/math.tan(alpha_slope/180*math.pi)
 	# 根据H值计算出A、B点坐标
