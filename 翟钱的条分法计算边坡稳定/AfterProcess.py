@@ -28,6 +28,9 @@ def draw_slope(c,center,slice_x,radius):
 		plt.plot(x_radius[i],y_radius[i], color='black')
 	# 绘制圆心
 	plt.scatter(center[0],center[1], color='g')
+	c_x = math.floor(center[0]*100)/100
+	c_y = math.floor(center[1]*100)/100
+	plt.text(c_x, c_y, (c_x,c_y),ha='center', va='bottom', fontsize=10)
 	# 绘制圆弧（以直代曲）
 	side_b = side_bottom(slice_x,center,radius)
 	x_arc = [[slice_x[0],slice_x[1]]]
