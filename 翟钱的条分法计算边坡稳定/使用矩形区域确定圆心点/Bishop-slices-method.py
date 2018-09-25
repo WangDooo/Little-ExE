@@ -10,6 +10,8 @@ phi_effective = 30 # 内摩擦角
 gamma = 20 # 重度
 # 条分数目
 N = 5
+# 拟定圆心数目
+n_center = 25
 # 计算次数标记
 calc_num = 1
 # 设置搜索范围 beta1:25-30° beta2:35-40° delta_R:0-H m 

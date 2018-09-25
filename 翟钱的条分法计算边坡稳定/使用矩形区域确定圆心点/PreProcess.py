@@ -36,6 +36,9 @@ def circle_center(beta_1,beta_2,alpha_slope,A_x,A_y,B_x,B_y):
 	v2 = np.array([B_y-a1*B_x,A_y-a2*A_x]) 
 	return np.linalg.solve(v1,v2)
 
+# 根据设置的圆心数量得出各圆心位置
+def circle_center(H,A  )
+
 # 根据圆心坐标 计算OB长度为参考半径
 def circle_radius(center,B_x,B_y):
 	return math.sqrt((B_x-center[0])**2+(B_y-center[1])**2)
