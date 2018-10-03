@@ -37,7 +37,14 @@ def circle_center(beta_1,beta_2,alpha_slope,A_x,A_y,B_x,B_y):
 	return np.linalg.solve(v1,v2)
 
 # 根据设置的圆心数量得出各圆心位置
-def circle_center(H,A  )
+def circle_center(H,A_x,A_y,n_center):
+	side_num = int(sqrt(n_center))
+	delta = 2*H/(side_num-1)
+	center = []
+	for i in range(side_num):
+		for j in range(side_num):
+			center.append([A_x+delta*i+0.05*H,A_y+delta*j+0.05*H])
+	return center
 
 # 根据圆心坐标 计算OB长度为参考半径
 def circle_radius(center,B_x,B_y):
@@ -66,13 +73,21 @@ def point_left(center,radius,A_y): # center 是 [x,y]
 	return  min(solve((x-a)**2+(y-b)**2-r**2,x))
 
 # 圆弧与右侧坡下地面的交点 横坐标值
-def point_right(center,radius,B_y): # center 是 [x,y]
-	a = center[0] # 圆 (x-a)**2+(y-b)** = r**2
+def point_right(center,radius,A_x,A_y,B_x,B_y,bottom_or_slope): # center 是 [x,y]
+	a = center[0] # 圆 (x-a)**2+(y-b)**2 = r**2
 	b = center[1]
 	r = radius
-	y = B_y
-	x = Symbol('x')
-	return  max(solve((x-a)**2+(y-b)**2-r**2,x))
+	if bottom_or_slope == 'bottom':
+		y = B_y
+		x = Symbol('x')
+		ans = max(solve((x-a)**2+(y-b)**2-r**2,x))
+	else:
+		x = Symbol('x')
+		try:
+			ans = max(solve((x-a)**2+((B_y-A_y)*(x-A_x)/(B_x-A_x)+A_y-b)**2-r**2,x))
+		except:
+			ans = -1 
+	return  ans
 
 # 分条的宽度
 def slice_width(point_left,point_right,N):

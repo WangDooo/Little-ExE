@@ -21,11 +21,6 @@ def draw_slope(c,center,slice_x,radius):
 		plt.plot(x_slope[i],y_slope[i], color='r')
 		plt.scatter(x_slope[i],y_slope[i], color='b')
 
-	# 绘制半径
-	x_radius = [[slice_x[0],center[0]],[slice_x[-1],center[0]]]
-	y_radius = [[c['height_left'],center[1]],[c['height_right'],center[1]]]
-	for i in range(len(x_radius)):
-		plt.plot(x_radius[i],y_radius[i], color='black')
 	# 绘制圆心
 	plt.scatter(center[0],center[1], color='g')
 	c_x = math.floor(center[0]*100)/100
@@ -40,6 +35,11 @@ def draw_slope(c,center,slice_x,radius):
 		y_arc.append([side_b[i],side_b[i+1]])
 	for i in range(len(x_arc)):
 		plt.plot(x_arc[i],y_arc[i], color='black')
+	# 绘制半径
+	x_radius = [[slice_x[0],center[0]],[slice_x[-1],center[0]]]
+	y_radius = [[c['height_left'],center[1]],[side_b[-1],center[1]]]
+	for i in range(len(x_radius)):
+		plt.plot(x_radius[i],y_radius[i], color='black')
 	# 绘制分条线
 	# side_top(x,A_x,A_y,B_x,B_y,alpha_slope)
 	side_t = side_top(slice_x,c['A_x'],c['A_y'],c['B_x'],c['B_y'],c['alpha_slope'])
