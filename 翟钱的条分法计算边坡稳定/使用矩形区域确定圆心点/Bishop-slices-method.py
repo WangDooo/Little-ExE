@@ -24,10 +24,11 @@ center_list = circle_center(H,c['A_x'],c['A_y'],n_center)
 Fs_min = 999
 # 二层循环center,delta_R
 for center in center_list:
+	print(center)
 	R_0 = circle_radius(center,c['B_x'],c['B_y'])
-	for r in range(-delta_R,delta_R): # 半径搜索范围是 在R=OB+-delta_R
+	for r in range(-delta_R,delta_R+1): # 半径搜索范围是 在R=OB+-delta_R
 		# 设置新半径
-		R = R_0 + r
+		R = R_0 - r
 		# 与坡顶地面交点
 		point_l = point_left(center,R,c['A_y'])
 		# 与坡底地面交点
