@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 from PreProcess import *
+import numpy as np
 
 def draw_slope(c,center,slice_x,radius):
+	plt.figure(1)
 	ax = plt.subplot(111) # 一般都在ax中设置,不再plot中设置
 	plt.title('Bishop', size=14)
 	# 绘制边坡外框
@@ -52,4 +54,44 @@ def draw_slope(c,center,slice_x,radius):
 	for i in range(len(x_line)):
 		plt.plot(x_line[i],y_line[i], color='y',linestyle='-')
 	# 显示
+	# plt.show()
+
+
+def draw_equipotential_line(center_list,Fs_min_list):
+	plt.figure(2)
+	ax = plt.subplot(111)
+	# 获取x,y 的最大最小值
+	x_min = center_list[0][0]
+	y_min = center_list[0][1]
+	x_max = center_list[-1][0]
+	y_max = center_list[-1][1]
+	# 数据数目
+	n = int(sqrt(len(center_list)))
+	# 定义x, y
+	x = np.linspace(x_min, x_max, n)
+	y = np.linspace(y_min, y_max, n)
+	# 生成网格数据
+	X, Y = np.meshgrid(x, y)
+	# 将Fs_min_list的list的格式转为Numpy的数组格式
+	count = 0
+	Fs_temp = []
+	Fs_min_arr = []
+	for each in Fs_min_list:
+		Fs_temp.append(each)
+		count += 1
+		if count == n:
+			Fs_min_arr.append(Fs_temp)
+			Fs_temp = []
+			count = 0
+	Fs_min_arr = np.array(Fs_min_arr)
+	# 填充等高线的颜色, 10是等高线分为几部分
+	plt.contourf(X, Y, Fs_min_arr, 10, alpha = 0.75, cmap = plt.cm.hot)
+	# 绘制等高线
+	C = plt.contour(X, Y, Fs_min_arr, 10, colors = 'black')
+	# 绘制等高线数据
+	plt.clabel(C, inline = True, fontsize = 10)
+
+	# 去除坐标轴
+	# plt.xticks(())
+	# plt.yticks(())
 	plt.show()

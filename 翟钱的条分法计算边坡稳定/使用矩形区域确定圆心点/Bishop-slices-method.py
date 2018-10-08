@@ -9,22 +9,24 @@ c_effective = 5 # 黏聚力
 phi_effective = 30 # 内摩擦角
 gamma = 20 # 重度
 # 条分数目
-N = 5
+N = 10
 # 拟定圆心数目
 n_center = 25
 # 计算次数标记
 calc_num = 1
 #  delta_R:0-H m 
-delta_R = 3
+delta_R = 1
 
 # 主计算程序 
 # 初始化几何参数
 c = coordinate(H,alpha_slope,c_effective,phi_effective,N)
 center_list = circle_center(H,c['A_x'],c['A_y'],n_center)
 Fs_min = 999
+Fs_min_list = []
 # 二层循环center,delta_R
 for center in center_list:
 	print(center)
+	Fs_min_each = 999 
 	R_0 = circle_radius(center,c['B_x'],c['B_y'])
 	for r in range(-delta_R,delta_R+1): # 半径搜索范围是 在R=OB+-delta_R
 		# 设置新半径
@@ -74,6 +76,10 @@ for center in center_list:
 			center_min = center
 			slice_min = slice_x
 			radius_min = R
+		if Fs < Fs_min_each:
+			Fs_min_each = Fs
+	Fs_min_list.append(Fs_min_each)
 
-print('Fanal_min','center_min:',center_min,'R:',radius_min,'Fs:',Fs_min)
+print('Fanal_min','center_min:',center_min,'R:',radius_min,'Fs_min:',Fs_min)
 draw_slope(c,center_min,slice_min,radius_min)
+draw_equipotential_line(center_list,Fs_min_list)
