@@ -28,17 +28,9 @@ def coordinate(H,alpha_slope,c_effective,phi_effective,N):
 			 'phi_effective':phi_effective,
 			 'N':N}
 
-# 根据beta_1、beta_2推算出圆心位置
-def circle_center(beta_1,beta_2,alpha_slope,A_x,A_y,B_x,B_y):
-	a1 = math.tan((180-beta_1-alpha_slope)/180*math.pi) # beta_1过B点直线的斜率
-	a2 = math.tan((beta_2)/180*math.pi) # beta_2过A点直线的斜率
-	v1 = np.array([[-a1,1],[-a2,1]])
-	v2 = np.array([B_y-a1*B_x,A_y-a2*A_x]) 
-	return np.linalg.solve(v1,v2)
-
 # 根据设置的圆心数量得出各圆心位置
-def circle_center(H,A_x,A_y,n_center):
-	side_num = int(sqrt(n_center))
+def circle_center(H,A_x,A_y,seed):
+	side_num = seed
 	delta = 2*H/(side_num-1)
 	center = []
 	for i in range(side_num):

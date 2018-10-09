@@ -9,9 +9,9 @@ c_effective = 5 # 黏聚力
 phi_effective = 30 # 内摩擦角
 gamma = 20 # 重度
 # 条分数目
-N = 10
-# 拟定圆心数目
-n_center = 25
+N = 5
+# 矩形区域单边布种数量
+seed = 5
 # 计算次数标记
 calc_num = 1
 #  delta_R:0-H m 
@@ -20,7 +20,7 @@ delta_R = 1
 # 主计算程序 
 # 初始化几何参数
 c = coordinate(H,alpha_slope,c_effective,phi_effective,N)
-center_list = circle_center(H,c['A_x'],c['A_y'],n_center)
+center_list = circle_center(H,c['A_x'],c['A_y'],seed)
 Fs_min = 999
 Fs_min_list = []
 # 二层循环center,delta_R

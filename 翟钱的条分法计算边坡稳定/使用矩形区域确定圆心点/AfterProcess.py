@@ -67,6 +67,7 @@ def draw_equipotential_line(center_list,Fs_min_list):
 	y_max = center_list[-1][1]
 	# 数据数目
 	n = int(sqrt(len(center_list)))
+	print("n",n)
 	# 定义x, y
 	x = np.linspace(x_min, x_max, n)
 	y = np.linspace(y_min, y_max, n)
