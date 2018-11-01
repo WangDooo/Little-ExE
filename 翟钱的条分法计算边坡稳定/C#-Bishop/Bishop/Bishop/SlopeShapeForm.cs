@@ -20,18 +20,18 @@ namespace Bishop {
 
         private void button1_Click(object sender, EventArgs e) {
             try {
-                Setting.ShareClass.Ax = System.Convert.ToDouble(txtAx.Text);
-                Setting.ShareClass.Ay = System.Convert.ToDouble(txtAy.Text);
-                Setting.ShareClass.Bx = System.Convert.ToDouble(txtBx.Text);
-                Setting.ShareClass.By = System.Convert.ToDouble(txtBy.Text);
-                Setting.ShareClass.Cx = System.Convert.ToDouble(txtCx.Text);
-                Setting.ShareClass.Cy = System.Convert.ToDouble(txtCy.Text);
-                Setting.ShareClass.Dx = System.Convert.ToDouble(txtDx.Text);
-                Setting.ShareClass.Dy = System.Convert.ToDouble(txtDy.Text);
-                Setting.ShareClass.Ex = System.Convert.ToDouble(txtEx.Text);
-                Setting.ShareClass.Ey = System.Convert.ToDouble(txtEy.Text);
-                Setting.ShareClass.Fx = System.Convert.ToDouble(txtFx.Text);
-                Setting.ShareClass.Fy = System.Convert.ToDouble(txtFy.Text);
+                Setting.ShareClass.Ax = System.Convert.ToSingle(txtAy.Text);
+                Setting.ShareClass.Ay = System.Convert.ToSingle(txtAy.Text);
+                Setting.ShareClass.Bx = System.Convert.ToSingle(txtBx.Text);
+                Setting.ShareClass.By = System.Convert.ToSingle(txtBy.Text);
+                Setting.ShareClass.Cx = System.Convert.ToSingle(txtCx.Text);
+                Setting.ShareClass.Cy = System.Convert.ToSingle(txtCy.Text);
+                Setting.ShareClass.Dx = System.Convert.ToSingle(txtDx.Text);
+                Setting.ShareClass.Dy = System.Convert.ToSingle(txtDy.Text);
+                Setting.ShareClass.Ex = System.Convert.ToSingle(txtEx.Text);
+                Setting.ShareClass.Ey = System.Convert.ToSingle(txtEy.Text);
+                Setting.ShareClass.Fx = System.Convert.ToSingle(txtFx.Text);
+                Setting.ShareClass.Fy = System.Convert.ToSingle(txtFy.Text);
                 this.Close();
             }
             catch(Exception ex) {

@@ -40,13 +40,13 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F);
+            this.textBox1.Font = new System.Drawing.Font("宋体", 11F);
             this.textBox1.Location = new System.Drawing.Point(18, 69);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(254, 180);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1. 固定边坡形状\r\n2. 绘图简易处理\r\n3. 数据导出格式未确定\r\n4. 基本设置未加密保存\r\n5. 父子窗口间传值方式待改进";
+            this.textBox1.Text = "1. 固定边坡形状\r\n\r\n2. 绘图简易处理\r\n\r\n3. 数据导出格式未确定\r\n\r\n4. 基本设置未加密保存\r\n\r\n5. 父子窗口间传值方式待改进";
             // 
             // AboutForm
             // 

@@ -7,63 +7,63 @@ using System.Threading.Tasks;
 namespace Bishop.Setting {
     class ShareClass {
         // 记录各点坐标
-        private static double _Ax = 0;
-        public static double Ax {
+        private static float _Ax = 0;
+        public static float Ax {
             get { return ShareClass._Ax; }
             set { ShareClass._Ax = value; }
         }
-        private static double _Ay = 0;
-        public static double Ay {
+        private static float _Ay = 0;
+        public static float Ay {
             get { return ShareClass._Ay; }
             set { ShareClass._Ay = value; }
         }
-        private static double _Bx = 0;
-        public static double Bx {
+        private static float _Bx = 0;
+        public static float Bx {
             get { return ShareClass._Bx; }
             set { ShareClass._Bx = value; }
         }
-        private static double _By = 15;
-        public static double By {
+        private static float _By = 15;
+        public static float By {
             get { return ShareClass._By; }
             set { ShareClass._By = value; }
         }
-        private static double _Cx = 15;
-        public static double Cx {
+        private static float _Cx = 15;
+        public static float Cx {
             get { return ShareClass._Cx; }
             set { ShareClass._Cx = value; }
         }
-        private static double _Cy = 15;
-        public static double Cy {
+        private static float _Cy = 15;
+        public static float Cy {
             get { return ShareClass._Cy; }
             set { ShareClass._Cy = value; }
         }
-        private static double _Dx = 20;
-        public static double Dx {
+        private static float _Dx = 20;
+        public static float Dx {
             get { return ShareClass._Dx; }
             set { ShareClass._Dx = value; }
         }
-        private static double _Dy = 10;
-        public static double Dy {
+        private static float _Dy = 10;
+        public static float Dy {
             get { return ShareClass._Dy; }
             set { ShareClass._Dy = value; }
         }
-        private static double _Ex = 35;
-        public static double Ex {
+        private static float _Ex = 35;
+        public static float Ex {
             get { return ShareClass._Ex; }
             set { ShareClass._Ex = value; }
         }
-        private static double _Ey = 10;
-        public static double Ey {
+        private static float _Ey = 10;
+        public static float Ey {
             get { return ShareClass._Ey; }
             set { ShareClass._Ey = value; }
         }
-        private static double _Fx = 35;
-        public static double Fx {
+        private static float _Fx = 35;
+        public static float Fx {
             get { return ShareClass._Fx; }
             set { ShareClass._Fx = value; }
         }
-        private static double _Fy = 0;
-        public static double Fy {
+        private static float _Fy = 0;
+        public static float Fy {
             get { return ShareClass._Fy; }
             set { ShareClass._Fy = value; }
         }

@@ -72,8 +72,8 @@ namespace Bishop {
         }
         
 
-        public void ConvertPoint(ref int x,ref int y){
-            int Height = this.pictureBox1.Height;
+        public void ConvertPoint(ref float x,ref float y){
+            float Height = this.pictureBox1.Height;
             x = x + 10; // 10与边界的距离
             y = Height - y - 10;
         }
@@ -117,7 +117,9 @@ namespace Bishop {
             this.dataGridView1.Rows[index].Cells[2].Value = "123RR ";
             this.dataGridView1.Rows[index].Cells[3].Value = "123RR ";
         }
+        
         // 绘制
+
         private void toolStripButton3_Click(object sender, EventArgs e) {
             int Height = this.pictureBox1.Height;
             int Width = this.pictureBox1.Width;
@@ -125,10 +127,33 @@ namespace Bishop {
             Bitmap bitmap = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
-            int x = 0;
-            int y = 100;
-            ConvertPoint(ref x, ref y );
-            g.DrawRectangle(new Pen(Color.Black), x, y, 50, 100);
+            Pen mypen = new Pen(Color.Black, 2);
+            // 读取各点值
+            float LargeRatio = 10;
+            float Ax = Setting.ShareClass.Ax * LargeRatio;
+            float Ay = Setting.ShareClass.Ay * LargeRatio;
+            float Bx = Setting.ShareClass.Bx * LargeRatio;
+            float By = Setting.ShareClass.By * LargeRatio;
+            float Cx = Setting.ShareClass.Cx * LargeRatio;
+            float Cy = Setting.ShareClass.Cy * LargeRatio;
+            float Dx = Setting.ShareClass.Dx * LargeRatio;
+            float Dy = Setting.ShareClass.Dy * LargeRatio;
+            float Ex = Setting.ShareClass.Ex * LargeRatio;
+            float Ey = Setting.ShareClass.Ey * LargeRatio;
+            float Fx = Setting.ShareClass.Fx * LargeRatio;
+            float Fy = Setting.ShareClass.Fy * LargeRatio;
+            ConvertPoint(ref Ax, ref Ay );
+            ConvertPoint(ref Bx, ref By );
+            ConvertPoint(ref Cx, ref Cy );
+            ConvertPoint(ref Dx, ref Dy );
+            ConvertPoint(ref Ex, ref Ey );
+            ConvertPoint(ref Fx, ref Fy );
+            g.DrawLine(mypen, Ax, Ay, Bx, By);
+            g.DrawLine(mypen, Bx, By, Cx, Cy);
+            g.DrawLine(mypen, Cx, Cy, Dx, Dy);
+            g.DrawLine(mypen, Dx, Dy, Ex, Ey);
+            g.DrawLine(mypen, Ex, Ey, Fx, Fy);
+            g.DrawLine(mypen, Fx, Fy, Ax, Ay);
             this.pictureBox1.Image = bitmap;
         }
         // 图片复位
