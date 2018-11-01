@@ -9,7 +9,7 @@ c_effective = 5 # 黏聚力
 phi_effective = 30 # 内摩擦角
 gamma = 20 # 重度
 # 条分数目
-N = 30
+N = 5
 # 矩形区域单边布种数量
 seed = 5
 # 计算次数标记
