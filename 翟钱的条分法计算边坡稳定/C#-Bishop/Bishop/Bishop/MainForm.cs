@@ -119,8 +119,7 @@ namespace Bishop {
         }
         
         // 绘制
-
-        private void toolStripButton3_Click(object sender, EventArgs e) {
+        public void DrawSlope() {
             int Height = this.pictureBox1.Height;
             int Width = this.pictureBox1.Width;
             //创建位图
@@ -156,6 +155,10 @@ namespace Bishop {
             g.DrawLine(mypen, Fx, Fy, Ax, Ay);
             this.pictureBox1.Image = bitmap;
         }
+
+        private void toolStripButton3_Click(object sender, EventArgs e) {
+            DrawSlope();
+        }
         // 图片复位
         private void toolStripButton4_Click(object sender, EventArgs e) {
             int y = splitContainer1.Panel2.Top;
@@ -171,6 +174,28 @@ namespace Bishop {
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
             AboutForm aboutForm = new AboutForm();
             aboutForm.ShowDialog();
+        }
+
+        private void 土体参数ToolStripMenuItem_Click(object sender, EventArgs e) {
+            SoilParameterForm soilParameterForm = new SoilParameterForm();
+            soilParameterForm.ShowDialog();
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e) {
+            ComputeBishop();
+        }
+
+        public void ComputeBishop() {
+            // 分条的宽度
+            float slice_width(float point_left,float point_right, int N) {
+                float width = Math.Abs(point_right-point_left);
+                return width / N;
+            }
+            // 分条的x坐标 维度是N+1
+            float[] slice_x_axis(float point_left, float point_right, int N) {
+                float single_width = slice_width(point_left,point_right,N);
+                return
+            }
         }
     }
 }

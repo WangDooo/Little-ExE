@@ -10,3 +10,5 @@ D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bisho
 D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bishop\Bishop\obj\Debug\Bishop.pdb
 D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bishop\Bishop\obj\Debug\Bishop.SlopeShapeForm.resources
 D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bishop\Bishop\obj\Debug\Bishop.AboutForm.resources
+D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bishop\Bishop\obj\Debug\Bishop.SoilParameterForm.resources
+D:\Coding\Github\Little-ExE\翟钱的条分法计算边坡稳定\C#-Bishop\Bishop\Bishop\obj\Debug\Bishop.SetSeedForm.resources

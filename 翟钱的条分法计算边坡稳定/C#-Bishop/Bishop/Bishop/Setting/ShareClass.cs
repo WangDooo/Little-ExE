@@ -68,6 +68,21 @@ namespace Bishop.Setting {
             set { ShareClass._Fy = value; }
         }
         // 记录土体参数
+        private static float _EffectiveC = 5;
+        public static float EffectiveC {
+            get { return ShareClass._EffectiveC; }
+            set { ShareClass._EffectiveC = value; }
+        }
+        private static float _EffectivePhi = 30;
+        public static float EffectivePhi {
+            get { return ShareClass._EffectivePhi; }
+            set { ShareClass._EffectivePhi = value; }
+        }
+        private static float _Gamma = 20;
+        public static float Gamma {
+            get { return ShareClass._Gamma; }
+            set { ShareClass._Gamma = value; }
+        }
         // 记录网格布种信息
 
     }

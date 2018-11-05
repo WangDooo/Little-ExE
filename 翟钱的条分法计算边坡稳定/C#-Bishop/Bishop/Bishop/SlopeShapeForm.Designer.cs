@@ -289,7 +289,7 @@
             this.MaximizeBox = false;
             this.Name = "SlopeShapeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SlopeShapeForm";
+            this.Text = "设置边坡参数";
             this.Load += new System.EventHandler(this.SlopeShapeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

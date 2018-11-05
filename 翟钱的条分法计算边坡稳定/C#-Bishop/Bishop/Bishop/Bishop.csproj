@@ -59,12 +59,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetSeedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetSeedForm.Designer.cs">
+      <DependentUpon>SetSeedForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\ShareClass.cs" />
     <Compile Include="SlopeShapeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SlopeShapeForm.Designer.cs">
       <DependentUpon>SlopeShapeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SoilParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SoilParameterForm.Designer.cs">
+      <DependentUpon>SoilParameterForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -81,8 +93,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SetSeedForm.resx">
+      <DependentUpon>SetSeedForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SlopeShapeForm.resx">
       <DependentUpon>SlopeShapeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SoilParameterForm.resx">
+      <DependentUpon>SoilParameterForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
