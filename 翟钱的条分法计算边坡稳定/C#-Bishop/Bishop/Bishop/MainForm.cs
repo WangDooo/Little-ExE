@@ -155,7 +155,7 @@ namespace Bishop {
             g.DrawLine(mypen, Fx, Fy, Ax, Ay);
             this.pictureBox1.Image = bitmap;
         }
-
+        // 触发绘制边坡
         private void toolStripButton3_Click(object sender, EventArgs e) {
             DrawSlope();
         }
@@ -187,15 +187,50 @@ namespace Bishop {
 
         public void ComputeBishop() {
             // 分条的宽度
-            float slice_width(float point_left,float point_right, int N) {
-                float width = Math.Abs(point_right-point_left);
-                return width / N;
+            double slice_width(double point_left,double point_right) {
+                double width = Math.Abs(point_right-point_left);
+                return width / Setting.ShareClass.N;
             }
             // 分条的x坐标 维度是N+1
-            float[] slice_x_axis(float point_left, float point_right, int N) {
-                float single_width = slice_width(point_left,point_right,N);
-                return
+            List<double> slice_x_axis(double point_left, double point_right) {
+                List<double> result = new List<double>();
+                double single_width = slice_width(point_left, point_right);
+                double temp = point_left;
+                for (int i=0; i < Setting.ShareClass.N + 1; i++) {
+                    result.Add(temp);
+                    temp += single_width;
+                }
+                return result;
             }
+            // 计算面积 将四边形分成两个三角形，根据海伦公式
+            double calcArea(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4) {
+                double calcDistance(double a1,double b1,double a2,double b2) {
+                    return Math.Sqrt(Math.Pow((a1-a2),2.0) + Math.Pow((b1-b2),2.0));
+                }
+                double d12 = calcDistance(x1, y1, x2, y2);
+	            double d23 = calcDistance(x2, y2, x3, y3);
+	            double d34 = calcDistance(x3, y3, x4, y4);
+	            double d41 = calcDistance(x4, y4, x1, y1);
+	            double d24 = calcDistance(x2, y2, x4, y4);
+                double k1 = (d12+d41+d24)/2;
+	            double k2 = (d23+d34+d24)/2;
+	            double s1 = Math.Sqrt((k1*(k1-d12)*(k1-d41)*(k1-d24)));
+	            double s2 = Math.Sqrt((k2*(k2-d23)*(k2-d34)*(k2-d24)));
+                double s = s1+s2;
+                return s;
+            }
+            List<double> mytemp = slice_x_axis(10,30);
+            string str = "";
+            foreach(double t in mytemp) {
+                str += t.ToString();
+            }
+            string str1 = calcArea(0,0,0,2,2,2,2,0).ToString();
+            MessageBox.Show(str1);
+        }
+
+        private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {
+            SetSeedForm setSeedForm = new SetSeedForm();
+            setSeedForm.ShowDialog();
         }
     }
 }

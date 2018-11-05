@@ -84,6 +84,50 @@ namespace Bishop.Setting {
             set { ShareClass._Gamma = value; }
         }
         // 记录网格布种信息
-
+        private static int _N = 20;
+        public static int N {
+            get { return ShareClass._N; }
+            set { ShareClass._N = value; }
+        }
+        private static float _CenterX;
+        public static float CenterX {
+            get { return ShareClass._CenterX; }
+            set { ShareClass._CenterX = value; }
+        }
+        private static float _CenterY;
+        public static float CenterY {
+            get { return ShareClass._CenterY; }
+            set { ShareClass._CenterY = value; }
+        }
+        private static float _CenterWidth;
+        public static float CenterWidth {
+            get { return ShareClass._CenterWidth; }
+            set { ShareClass._CenterWidth = value; }
+        }
+        private static float _CenterHeight;
+        public static float CenterHeight {
+            get { return ShareClass._CenterHeight; }
+            set { ShareClass._CenterHeight = value; }
+        }
+        private static float _SeedHeight = 5;
+        public static float SeedHeight {
+            get { return ShareClass._SeedHeight; }
+            set { ShareClass._SeedHeight = value; }
+        }
+        private static float _SeedWidth = 5;
+        public static float SeedWidth {
+            get { return ShareClass._SeedWidth; }
+            set { ShareClass._SeedWidth = value; }
+        }
+        private static float _RadiusRange = 3;
+        public static float RadiusRange {
+            get { return ShareClass._RadiusRange; }
+            set { ShareClass._RadiusRange = value; }
+        }
+        private static float _RadiusDelta = 1;
+        public static float RadiusDelta {
+            get { return ShareClass._RadiusDelta; }
+            set { ShareClass._RadiusDelta = value; }
+        }
     }
 }

@@ -126,22 +126,23 @@
             // 边坡形状ToolStripMenuItem
             // 
             this.边坡形状ToolStripMenuItem.Name = "边坡形状ToolStripMenuItem";
-            this.边坡形状ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.边坡形状ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.边坡形状ToolStripMenuItem.Text = "边坡形状";
             this.边坡形状ToolStripMenuItem.Click += new System.EventHandler(this.边坡形状ToolStripMenuItem_Click);
             // 
             // 土体参数ToolStripMenuItem
             // 
             this.土体参数ToolStripMenuItem.Name = "土体参数ToolStripMenuItem";
-            this.土体参数ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.土体参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.土体参数ToolStripMenuItem.Text = "土体参数";
             this.土体参数ToolStripMenuItem.Click += new System.EventHandler(this.土体参数ToolStripMenuItem_Click);
             // 
             // 计算布种ToolStripMenuItem
             // 
             this.计算布种ToolStripMenuItem.Name = "计算布种ToolStripMenuItem";
-            this.计算布种ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.计算布种ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.计算布种ToolStripMenuItem.Text = "计算布种";
+            this.计算布种ToolStripMenuItem.Click += new System.EventHandler(this.计算布种ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
