@@ -203,7 +203,7 @@ namespace Bishop {
                 return result;
             }
             // 计算面积 将四边形分成两个三角形，根据海伦公式
-            double calcArea(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4) {
+            double CalcArea(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4) {
                 double calcDistance(double a1,double b1,double a2,double b2) {
                     return Math.Sqrt(Math.Pow((a1-a2),2.0) + Math.Pow((b1-b2),2.0));
                 }
@@ -219,13 +219,58 @@ namespace Bishop {
                 double s = s1+s2;
                 return s;
             }
-            List<double> mytemp = slice_x_axis(10,30);
-            string str = "";
-            foreach(double t in mytemp) {
-                str += t.ToString();
+            // 根据圆心坐标 计算OD长度为参考半径
+            double Circle_radius(double center_x, double center_y){ 
+                return Math.Sqrt(Math.Pow((Setting.ShareClass.Dx-center_x),2.0)+Math.Pow((Setting.ShareClass.Dy-center_y),2.0));
             }
-            string str1 = calcArea(0,0,0,2,2,2,2,0).ToString();
-            MessageBox.Show(str1);
+	        //  圆弧与左侧坡上地面的交点 横坐标值
+            double Point_left(double center_x,double center_y, double r) {
+                double y = Setting.ShareClass.Cy;
+                double t = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0));
+                return center_x-t;
+            }
+            // 圆弧分段交点 维度是N+1 
+            List<double> Side_bottom(List<double> slice_x, double center_x, double center_y, double r) {
+                List<double> side_bottom = new List<double>();
+                foreach(double x in slice_x) {
+                    double result = center_y-Math.Sqrt(r*r-Math.Pow((x-center_x),2.0));
+                    side_bottom.Add(result);
+                }
+                return side_bottom;
+            }
+            // 上边界的分段函数表达式
+            List<double> Side_top(List<double> x,bool bottom_or_slope) {
+                List<double> y_top = new List<double>();
+                foreach(double t in x) {
+                    double y = 0.0;
+                    if (t <= Setting.ShareClass.Cx){
+                        y = Setting.ShareClass.Cy;
+                    }
+                    else if(t > Setting.ShareClass.Cx && t <= Setting.ShareClass.Dx){
+                        y = ((Setting.ShareClass.Dy-Setting.ShareClass.Cy)/(Setting.ShareClass.Dx-Setting.ShareClass.Cx))*(t-Setting.ShareClass.Cx)+Setting.ShareClass.Cy;
+                    }
+                    else if( t > Setting.ShareClass.Dx){
+                        y = Setting.ShareClass.Dy;
+                    }
+                    y_top.Add(y);
+                }
+                return y_top;
+            }
+
+            // 测试代码
+            string str = "";
+            string str1 = CalcArea(0,0,0,2,2,2,2,0).ToString();
+            string str2 = Point_left(20,18,6).ToString();
+            List<double> sl_x = new List<double>();
+            List<double> side_b = new List<double>();
+
+            sl_x = slice_x_axis(15,20);
+            side_b = Side_bottom(sl_x,15,20,5);
+            foreach(double t in side_b) {
+                str += Math.Round(t,2).ToString();
+            }
+            MessageBox.Show(str);
+            MessageBox.Show(side_b.Count().ToString());
         }
 
         private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {
