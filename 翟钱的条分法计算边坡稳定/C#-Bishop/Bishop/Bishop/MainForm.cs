@@ -223,11 +223,40 @@ namespace Bishop {
             double Circle_radius(double center_x, double center_y){ 
                 return Math.Sqrt(Math.Pow((Setting.ShareClass.Dx-center_x),2.0)+Math.Pow((Setting.ShareClass.Dy-center_y),2.0));
             }
+
+            //
+            double GetMinDistance(double Ax, double Ay){
+                double dis = 0;
+                double Cx = Setting.ShareClass.Cx;
+                double Cy = Setting.ShareClass.Cy;
+                double Dx = Setting.ShareClass.Dx;
+                double Dy = Setting.ShareClass.Dy;
+                double lineK = (Dy - Cy) / (Dx - Cx);
+                double lineC = (Dx * Cy - Cx * Dy) / (Dx - Cx);
+                dis = Math.Abs(lineK * Ax - Ay + lineC) / (Math.Sqrt(lineK * lineK + 1));
+                return dis;
+            }
 	        //  圆弧与左侧坡上地面的交点 横坐标值
             double Point_left(double center_x,double center_y, double r) {
                 double y = Setting.ShareClass.Cy;
                 double t = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0));
                 return center_x-t;
+            }
+
+            // 圆弧与右侧坡下地面的交点 横坐标值
+            double Point_Right(double center_x, double center_y, double r, bool bottom) {
+                double result = -1;
+                if ( r <= GetMinDistance(center_x,center_y) ) {
+                    return result;
+                }
+                if (bottom == true){
+                    double y = Setting.ShareClass.Dy;
+                    result = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0))+center_x;
+                } 
+                else {
+
+                }
+                return result;
             }
             // 圆弧分段交点 维度是N+1 
             List<double> Side_bottom(List<double> slice_x, double center_x, double center_y, double r) {
@@ -239,7 +268,7 @@ namespace Bishop {
                 return side_bottom;
             }
             // 上边界的分段函数表达式
-            List<double> Side_top(List<double> x,bool bottom_or_slope) {
+            List<double> Side_top(List<double> x) {
                 List<double> y_top = new List<double>();
                 foreach(double t in x) {
                     double y = 0.0;
@@ -263,14 +292,18 @@ namespace Bishop {
             string str2 = Point_left(20,18,6).ToString();
             List<double> sl_x = new List<double>();
             List<double> side_b = new List<double>();
+            List<double> side_t = new List<double>();
 
             sl_x = slice_x_axis(15,20);
             side_b = Side_bottom(sl_x,15,20,5);
-            foreach(double t in side_b) {
-                str += Math.Round(t,2).ToString();
+            side_t = Side_top(sl_x);
+            foreach(double t in side_t) {
+                str += Math.Round(t,2).ToString()+" ";
             }
-            MessageBox.Show(str);
-            MessageBox.Show(side_b.Count().ToString());
+            //MessageBox.Show(str);
+            double ans = GetMinDistance(20,15);
+            MessageBox.Show(ans.ToString());
+            // MessageBox.Show(side_b.Count().ToString());
         }
 
         private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {
