@@ -76,7 +76,7 @@ for center in center_list:
 			center_min = center
 			slice_min = slice_x
 			radius_min = R
-		if Fs < Fs_min_each:
+		if Fs < Fs_min_each: # 为了统计各点Fs 画等势线
 			Fs_min_each = Fs
 	Fs_min_list.append(Fs_min_each)
 

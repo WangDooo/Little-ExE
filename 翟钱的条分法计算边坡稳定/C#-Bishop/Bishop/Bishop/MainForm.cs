@@ -14,16 +14,28 @@ namespace Bishop {
         public MainForm() {
             InitializeComponent();
         }
+        // 全局变量
+        int xPos;   // 鼠标位置
+        int yPos;   // 鼠标位置
+        bool MoveFlag;  // 判断鼠标是否被按下
+        int calc_num = 1;   // 计算次数标记 
+        double Fs_min = 999;    // 最小Fs
+        double center_x_min;
+        double center_y_min;
+        double radius_min;
+        List<double> slice_min = new List<double>();
 
+        // List<double> Fs_min_list = new List<double>(); // 为了统计各点Fs 画等势线
+
+        // 初始化分隔条的位置
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e) {
             this.dataGridView1.Width = this.splitContainer1.Panel1.Width;
         }
-
         private void MainForm_Load(object sender, EventArgs e) {
             this.dataGridView1.Width = this.splitContainer1.Panel1.Width;
             this.MouseWheel += PictureBox1_MouseWheel; 
         }
-
+        // 图片的放大和缩小
         void PictureBox1_MouseWheel(object sender, MouseEventArgs e){ //判断上滑还是下滑
             if (e.Delta < 0){ //计算缩放大小
                 this.pictureBox1.Width = this.pictureBox1.Width * 9 / 10;
@@ -35,12 +47,8 @@ namespace Bishop {
             
         }
 
-        int xPos;
-        int yPos;
-        bool MoveFlag;
         
-
-
+        
         private void timer1_Tick(object sender, EventArgs e) {
             toolStripStatusLabel1.Text = DateTime.Now.ToShortDateString();
             toolStripStatusLabel2.Text = DateTime.Now.ToLongTimeString();
@@ -182,6 +190,9 @@ namespace Bishop {
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e) {
+            calc_num = 1;
+            // 清空上一次的数据
+            dataGridView1.Rows.Clear();
             ComputeBishop();
         }
 
@@ -219,12 +230,30 @@ namespace Bishop {
                 double s = s1+s2;
                 return s;
             }
+
+            // 解二元一次方程组
+            double Equations1_2(double a, double b, double c) {
+                double de = b * b - 4 * a * c;
+                double jie = -1;
+                if (a != 0){
+                    if (de >= 0){
+                        double x1 = ((-b) + Math.Sqrt(de)) / (2 * a);
+                        double x2 = ((-b) - Math.Sqrt(de)) / (2 * a);
+                        jie = Math.Max(x1,x2);
+                    }
+                    else{
+                        jie = -1; // -1 表示无解
+                    }
+                }
+                return jie;
+            }
+
             // 根据圆心坐标 计算OD长度为参考半径
             double Circle_radius(double center_x, double center_y){ 
                 return Math.Sqrt(Math.Pow((Setting.ShareClass.Dx-center_x),2.0)+Math.Pow((Setting.ShareClass.Dy-center_y),2.0));
             }
 
-            //
+            // 点到斜坡面的距离
             double GetMinDistance(double Ax, double Ay){
                 double dis = 0;
                 double Cx = Setting.ShareClass.Cx;
@@ -246,15 +275,26 @@ namespace Bishop {
             // 圆弧与右侧坡下地面的交点 横坐标值
             double Point_Right(double center_x, double center_y, double r, bool bottom) {
                 double result = -1;
+                double Cx = Setting.ShareClass.Cx;
+                double Cy = Setting.ShareClass.Cy;
+                double Dx = Setting.ShareClass.Dx;
+                double Dy = Setting.ShareClass.Dy;
+                
                 if ( r <= GetMinDistance(center_x,center_y) ) {
+                    MessageBox.Show("没有交点");
                     return result;
                 }
                 if (bottom == true){
-                    double y = Setting.ShareClass.Dy;
-                    result = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0))+center_x;
+                    result = Math.Sqrt(r*r-Math.Pow((Dy-center_y),2.0))+center_x;
                 } 
                 else {
-
+                    double K = (Dy-Cy)/(Dx-Cx);
+                    double B = -K*Cx+Cy-center_y;
+                    double a = K*K+1;
+                    double b = -2*center_x+2*B*K;
+                    double c = center_x*center_x+B*B-r*r;
+                    MessageBox.Show(K.ToString()+"\n"+B.ToString()+"\n"+a.ToString()+"\n"+b.ToString()+"\n"+c.ToString());
+                    result = Equations1_2(a,b,c);
                 }
                 return result;
             }
@@ -301,9 +341,36 @@ namespace Bishop {
                 str += Math.Round(t,2).ToString()+" ";
             }
             //MessageBox.Show(str);
-            double ans = GetMinDistance(20,15);
-            MessageBox.Show(ans.ToString());
+            // double p_r = Point_Right(20,15,5,false);
+            // MessageBox.Show(p_r.ToString());
             // MessageBox.Show(side_b.Count().ToString());
+
+            // 主计算程序
+            // 让逐行显示在Data中
+            for(int X = 3; X < 9; X++) {
+                for(int Y = 3; Y < 9; Y++) {
+                    for (int r=0; r<2; r++) {  
+                        double Fs;
+                        Fs = X*Y+r;
+                        int index = this.dataGridView1.Rows.Add();
+                        this.dataGridView1.Rows[index].Cells[0].Value = calc_num;
+                        this.dataGridView1.Rows[index].Cells[1].Value = X;
+                        this.dataGridView1.Rows[index].Cells[2].Value = Y;
+                        this.dataGridView1.Rows[index].Cells[3].Value = r;
+                        this.dataGridView1.Rows[index].Cells[4].Value = Fs;
+                        calc_num += 1;
+                        if (Fs < Fs_min) {
+                            Fs_min = Fs;
+                            center_x_min = X;
+                            center_y_min = Y;
+                            radius_min = r;
+                        }
+                    }
+                }
+            }
+            // 有一个标签显示最危险滑动面+提示计算完成
+            toolStripStatusLabel3.Text = "最危险滑动面为:"+"圆心坐标("+center_x_min.ToString()+","+center_y_min.ToString()+")"+"半径:"+radius_min.ToString()+". "+"安全系数Fs为:"+Fs_min.ToString();
+            MessageBox.Show("最危险滑动面为:"+"圆心坐标("+center_x_min.ToString()+","+center_y_min.ToString()+")"+"半径:"+radius_min.ToString()+".\n"+"安全系数Fs为:"+Fs_min.ToString(),"计算完成");
         }
 
         private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {

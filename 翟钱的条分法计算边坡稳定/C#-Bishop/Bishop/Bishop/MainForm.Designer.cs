@@ -43,10 +43,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -55,6 +51,11 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -126,21 +127,21 @@
             // 边坡形状ToolStripMenuItem
             // 
             this.边坡形状ToolStripMenuItem.Name = "边坡形状ToolStripMenuItem";
-            this.边坡形状ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.边坡形状ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.边坡形状ToolStripMenuItem.Text = "边坡形状";
             this.边坡形状ToolStripMenuItem.Click += new System.EventHandler(this.边坡形状ToolStripMenuItem_Click);
             // 
             // 土体参数ToolStripMenuItem
             // 
             this.土体参数ToolStripMenuItem.Name = "土体参数ToolStripMenuItem";
-            this.土体参数ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.土体参数ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.土体参数ToolStripMenuItem.Text = "土体参数";
             this.土体参数ToolStripMenuItem.Click += new System.EventHandler(this.土体参数ToolStripMenuItem_Click);
             // 
             // 计算布种ToolStripMenuItem
             // 
             this.计算布种ToolStripMenuItem.Name = "计算布种ToolStripMenuItem";
-            this.计算布种ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.计算布种ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.计算布种ToolStripMenuItem.Text = "计算布种";
             this.计算布种ToolStripMenuItem.Click += new System.EventHandler(this.计算布种ToolStripMenuItem_Click);
             // 
@@ -175,7 +176,7 @@
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(707, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(676, 17);
             this.toolStripStatusLabel3.Spring = true;
             this.toolStripStatusLabel3.Text = "seu";
             // 
@@ -218,40 +219,13 @@
             this.Num,
             this.X,
             this.Y,
-            this.R});
+            this.R,
+            this.Fs});
             this.dataGridView1.Location = new System.Drawing.Point(3, 1);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(288, 481);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // Num
-            // 
-            this.Num.DataPropertyName = "Num";
-            this.Num.HeaderText = "Num";
-            this.Num.Name = "Num";
-            this.Num.ReadOnly = true;
-            // 
-            // X
-            // 
-            this.X.DataPropertyName = "X";
-            this.X.HeaderText = "X";
-            this.X.Name = "X";
-            this.X.ReadOnly = true;
-            // 
-            // Y
-            // 
-            this.Y.DataPropertyName = "Y";
-            this.Y.HeaderText = "Y";
-            this.Y.Name = "Y";
-            this.Y.ReadOnly = true;
-            // 
-            // R
-            // 
-            this.R.DataPropertyName = "R";
-            this.R.HeaderText = "R";
-            this.R.Name = "R";
-            this.R.ReadOnly = true;
             // 
             // pictureBox1
             // 
@@ -335,6 +309,40 @@
             this.toolStripButton5.Text = "开始计算";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
+            // Num
+            // 
+            this.Num.DataPropertyName = "Num";
+            this.Num.HeaderText = "Num";
+            this.Num.Name = "Num";
+            this.Num.ReadOnly = true;
+            // 
+            // X
+            // 
+            this.X.DataPropertyName = "X";
+            this.X.HeaderText = "X";
+            this.X.Name = "X";
+            this.X.ReadOnly = true;
+            // 
+            // Y
+            // 
+            this.Y.DataPropertyName = "Y";
+            this.Y.HeaderText = "Y";
+            this.Y.Name = "Y";
+            this.Y.ReadOnly = true;
+            // 
+            // R
+            // 
+            this.R.DataPropertyName = "R";
+            this.R.HeaderText = "R";
+            this.R.Name = "R";
+            this.R.ReadOnly = true;
+            // 
+            // Fs
+            // 
+            this.Fs.HeaderText = "Fs";
+            this.Fs.Name = "Fs";
+            this.Fs.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -386,10 +394,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Num;
-        private System.Windows.Forms.DataGridViewTextBoxColumn X;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Y;
-        private System.Windows.Forms.DataGridViewTextBoxColumn R;
         private System.Windows.Forms.ToolStripMenuItem 计算布种ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
@@ -403,6 +407,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Num;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y;
+        private System.Windows.Forms.DataGridViewTextBoxColumn R;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Fs;
     }
 }
 
