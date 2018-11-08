@@ -89,33 +89,33 @@ namespace Bishop.Setting {
             get { return ShareClass._N; }
             set { ShareClass._N = value; }
         }
-        private static float _CenterX;
+        private static float _CenterX = 15.5F;
         public static float CenterX {
             get { return ShareClass._CenterX; }
             set { ShareClass._CenterX = value; }
         }
-        private static float _CenterY;
+        private static float _CenterY = 15.5F;
         public static float CenterY {
             get { return ShareClass._CenterY; }
             set { ShareClass._CenterY = value; }
         }
-        private static float _CenterWidth;
+        private static float _CenterWidth = 10;
         public static float CenterWidth {
             get { return ShareClass._CenterWidth; }
             set { ShareClass._CenterWidth = value; }
         }
-        private static float _CenterHeight;
+        private static float _CenterHeight = 10;
         public static float CenterHeight {
             get { return ShareClass._CenterHeight; }
             set { ShareClass._CenterHeight = value; }
         }
-        private static float _SeedHeight = 5;
-        public static float SeedHeight {
+        private static int _SeedHeight = 5;
+        public static int SeedHeight {
             get { return ShareClass._SeedHeight; }
             set { ShareClass._SeedHeight = value; }
         }
-        private static float _SeedWidth = 5;
-        public static float SeedWidth {
+        private static int _SeedWidth = 5;
+        public static int SeedWidth {
             get { return ShareClass._SeedWidth; }
             set { ShareClass._SeedWidth = value; }
         }

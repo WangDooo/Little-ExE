@@ -190,22 +190,24 @@ namespace Bishop {
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e) {
+            // 初始化计数
             calc_num = 1;
             // 清空上一次的数据
             dataGridView1.Rows.Clear();
+            // 开始计算
             ComputeBishop();
         }
 
         public void ComputeBishop() {
             // 分条的宽度
-            double slice_width(double point_left,double point_right) {
+            double Slice_width(double point_left,double point_right) {
                 double width = Math.Abs(point_right-point_left);
                 return width / Setting.ShareClass.N;
             }
             // 分条的x坐标 维度是N+1
-            List<double> slice_x_axis(double point_left, double point_right) {
+            List<double> Slice_x_axis(double point_left, double point_right) {
                 List<double> result = new List<double>();
-                double single_width = slice_width(point_left, point_right);
+                double single_width = Slice_width(point_left, point_right);
                 double temp = point_left;
                 for (int i=0; i < Setting.ShareClass.N + 1; i++) {
                     result.Add(temp);
@@ -326,51 +328,114 @@ namespace Bishop {
                 return y_top;
             }
 
+            // 圆心点列表 X方向
+            List<double> Center_X() {
+                List<double> result = new List<double>();
+                double temp_x = Setting.ShareClass.CenterX;
+                result.Add(Setting.ShareClass.CenterX);
+                double delta_x = Setting.ShareClass.CenterWidth / Setting.ShareClass.SeedWidth;
+                for(int i = 1; i < Setting.ShareClass.SeedWidth; i++) {
+                    temp_x += delta_x;
+                    result.Add(temp_x);
+                }
+                return result;
+            }
+            // 圆心点列表 Y方向
+            List<double> Center_Y() {
+                List<double> result = new List<double>();
+                double temp_y = Setting.ShareClass.CenterY;
+                result.Add(Setting.ShareClass.CenterY);
+                double delta_y = Setting.ShareClass.CenterHeight / Setting.ShareClass.SeedHeight;
+                for(int i = 1; i < Setting.ShareClass.SeedHeight; i++) {
+                    temp_y += delta_y;
+                    result.Add(temp_y);
+                }
+                return result;
+            }
+            // 半径变化列表
+            List<double> Radius_Range() {
+                List<double> result = new List<double>();
+                double r_range = Setting.ShareClass.RadiusRange;
+                double temp_r = r_range;
+                while(temp_r >= -r_range) {
+                    result.Add(temp_r);
+                    temp_r -= Setting.ShareClass.RadiusDelta;
+                }
+                return result;
+                
+            }
             // 测试代码
             string str = "";
             string str1 = CalcArea(0,0,0,2,2,2,2,0).ToString();
             string str2 = Point_left(20,18,6).ToString();
-            List<double> sl_x = new List<double>();
-            List<double> side_b = new List<double>();
-            List<double> side_t = new List<double>();
-
-            sl_x = slice_x_axis(15,20);
-            side_b = Side_bottom(sl_x,15,20,5);
-            side_t = Side_top(sl_x);
-            foreach(double t in side_t) {
+            //foreach(double t in side_t) {
+            //    str += Math.Round(t,2).ToString()+" ";
+            //}
+            List<double> c_x = Center_X();
+            List<double> r_r =  Radius_Range();
+            foreach(double t in r_r) {
                 str += Math.Round(t,2).ToString()+" ";
             }
-            //MessageBox.Show(str);
-            // double p_r = Point_Right(20,15,5,false);
-            // MessageBox.Show(p_r.ToString());
-            // MessageBox.Show(side_b.Count().ToString());
+            MessageBox.Show(str);
+            
 
             // 主计算程序
-            // 让逐行显示在Data中
-            for(int X = 3; X < 9; X++) {
-                for(int Y = 3; Y < 9; Y++) {
-                    for (int r=0; r<2; r++) {  
+            List<double> C_X = Center_X();
+            List<double> C_Y = Center_Y();
+
+            foreach (double center_x in C_X) {
+                foreach (double center_y in C_Y) {
+                    double length_OD = Circle_radius(center_x, center_y);
+                    List<double> R_List = Radius_Range();
+                    foreach (double r in R_List) {
+                        // 在OD的基础上对R变化
+                        double R = length_OD + r;
+                        // 与坡顶地面交点
+                        double point_l = Point_left(center_x,center_y,R);
+                        // 与坡面or底地面交点 根据R判断是坡面还是坡底
+                        bool bottom;
+                        if (r >= 0) {
+                            bottom = true;
+                        } else {
+                            bottom = false;
+                        }
+                        double point_r = Point_Right(center_x,center_y,R,bottom);
+                        if (point_r == -1) { // 若没有交点 退出本次循环
+                            break;
+                        }
+                        // 根据N 推算的分条横坐标值 维度N+1
+                        List<double> slice_x = Slice_x_axis(point_l,point_r);
+                        // 上边界的y值 维度N+1
+                        List<double> side_t = Side_top(slice_x);
+                        // 圆弧下边界的y值 维度N+1
+                        List<double> side_b = Side_bottom(slice_x,center_x,center_y,R);
+                        // 分条宽度
+                        double b = Slice_width(point_l,point_r);
+                        // 分条中点与圆心点的夹角 维度N
                         double Fs;
-                        Fs = X*Y+r;
+                        Fs = center_x*center_y+r;
+                        // 添加入dataGridView1 逐行显示在Data中
                         int index = this.dataGridView1.Rows.Add();
                         this.dataGridView1.Rows[index].Cells[0].Value = calc_num;
-                        this.dataGridView1.Rows[index].Cells[1].Value = X;
-                        this.dataGridView1.Rows[index].Cells[2].Value = Y;
-                        this.dataGridView1.Rows[index].Cells[3].Value = r;
-                        this.dataGridView1.Rows[index].Cells[4].Value = Fs;
+                        this.dataGridView1.Rows[index].Cells[1].Value = center_x;
+                        this.dataGridView1.Rows[index].Cells[2].Value = center_y;
+                        this.dataGridView1.Rows[index].Cells[3].Value = Math.Round(R,2);
+                        this.dataGridView1.Rows[index].Cells[4].Value = Math.Round(Fs,3);
                         calc_num += 1;
+                        // 找到Fs_min
                         if (Fs < Fs_min) {
-                            Fs_min = Fs;
-                            center_x_min = X;
-                            center_y_min = Y;
-                            radius_min = r;
+                            Fs_min = Math.Round(Fs,3);
+                            center_x_min = center_x;
+                            center_y_min = center_y;
+                            radius_min = Math.Round(R,2);
                         }
                     }
                 }
             }
+            
             // 有一个标签显示最危险滑动面+提示计算完成
-            toolStripStatusLabel3.Text = "最危险滑动面为:"+"圆心坐标("+center_x_min.ToString()+","+center_y_min.ToString()+")"+"半径:"+radius_min.ToString()+". "+"安全系数Fs为:"+Fs_min.ToString();
-            MessageBox.Show("最危险滑动面为:"+"圆心坐标("+center_x_min.ToString()+","+center_y_min.ToString()+")"+"半径:"+radius_min.ToString()+".\n"+"安全系数Fs为:"+Fs_min.ToString(),"计算完成");
+            toolStripStatusLabel3.Text = "最危险滑动面为: "+"圆心坐标=("+center_x_min.ToString()+","+center_y_min.ToString()+") "+"半径="+radius_min.ToString()+". "+"安全系数Fs="+Fs_min.ToString();
+            MessageBox.Show("最危险滑动面为: "+"圆心坐标=("+center_x_min.ToString()+","+center_y_min.ToString()+") "+"半径="+radius_min.ToString()+".\n"+"安全系数Fs="+Fs_min.ToString(),"计算完成");
         }
 
         private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {

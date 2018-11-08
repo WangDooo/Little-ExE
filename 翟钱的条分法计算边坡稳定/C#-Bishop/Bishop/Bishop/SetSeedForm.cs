@@ -25,8 +25,8 @@ namespace Bishop {
                 Setting.ShareClass.CenterY = System.Convert.ToSingle(txtCenterY.Text);
                 Setting.ShareClass.CenterWidth = System.Convert.ToSingle(txtCenterWidth.Text);
                 Setting.ShareClass.CenterHeight = System.Convert.ToSingle(txtCenterHeight.Text);
-                Setting.ShareClass.SeedHeight = System.Convert.ToSingle(txtSeedHeight.Text);
-                Setting.ShareClass.SeedWidth = System.Convert.ToSingle(txtSeedWidth.Text);
+                Setting.ShareClass.SeedHeight = System.Convert.ToInt32(txtSeedHeight.Text);
+                Setting.ShareClass.SeedWidth = System.Convert.ToInt32(txtSeedWidth.Text);
                 Setting.ShareClass.RadiusDelta = System.Convert.ToSingle(txtRadiusDelta.Text);
                 Setting.ShareClass.RadiusRange = System.Convert.ToSingle(txtRadiusRange.Text);
                 this.Close();
