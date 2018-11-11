@@ -9,13 +9,13 @@ c_effective = 5 # 黏聚力
 phi_effective = 30 # 内摩擦角
 gamma = 20 # 重度
 # 条分数目
-N = 5
+N = 20
 # 矩形区域单边布种数量
 seed = 5
 # 计算次数标记
 calc_num = 1
 #  delta_R:0-H m 
-delta_R = 1
+delta_R = 3
 
 # 主计算程序 
 # 初始化几何参数
@@ -81,5 +81,5 @@ for center in center_list:
 	Fs_min_list.append(Fs_min_each)
 
 print('Fanal_min','center_min:',center_min,'R:',radius_min,'Fs_min:',Fs_min)
-draw_slope(c,center_min,slice_min,radius_min)
-draw_equipotential_line(center_list,Fs_min_list)
+# draw_slope(c,center_min,slice_min,radius_min)
+# draw_equipotential_line(center_list,Fs_min_list)

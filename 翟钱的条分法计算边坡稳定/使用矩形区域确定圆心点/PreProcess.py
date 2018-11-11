@@ -36,6 +36,7 @@ def circle_center(H,A_x,A_y,seed):
 	for i in range(side_num):
 		for j in range(side_num):
 			center.append([A_x+delta*i+0.05*H,A_y+delta*j+0.05*H])
+	# center = [[20,15]]
 	return center
 
 # 根据圆心坐标 计算OB长度为参考半径

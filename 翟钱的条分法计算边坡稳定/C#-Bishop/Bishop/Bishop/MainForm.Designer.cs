@@ -43,6 +43,11 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,11 +56,7 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Fs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -176,7 +177,7 @@
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(676, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(707, 17);
             this.toolStripStatusLabel3.Spring = true;
             this.toolStripStatusLabel3.Text = "seu";
             // 
@@ -227,6 +228,40 @@
             this.dataGridView1.Size = new System.Drawing.Size(288, 481);
             this.dataGridView1.TabIndex = 0;
             // 
+            // Num
+            // 
+            this.Num.DataPropertyName = "Num";
+            this.Num.HeaderText = "Num";
+            this.Num.Name = "Num";
+            this.Num.ReadOnly = true;
+            // 
+            // X
+            // 
+            this.X.DataPropertyName = "X";
+            this.X.HeaderText = "X";
+            this.X.Name = "X";
+            this.X.ReadOnly = true;
+            // 
+            // Y
+            // 
+            this.Y.DataPropertyName = "Y";
+            this.Y.HeaderText = "Y";
+            this.Y.Name = "Y";
+            this.Y.ReadOnly = true;
+            // 
+            // R
+            // 
+            this.R.DataPropertyName = "R";
+            this.R.HeaderText = "R";
+            this.R.Name = "R";
+            this.R.ReadOnly = true;
+            // 
+            // Fs
+            // 
+            this.Fs.HeaderText = "Fs";
+            this.Fs.Name = "Fs";
+            this.Fs.ReadOnly = true;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -252,7 +287,8 @@
             this.toolStripButton2,
             this.toolStripButton3,
             this.toolStripButton4,
-            this.toolStripButton5});
+            this.toolStripButton5,
+            this.toolStripButton6});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(984, 25);
@@ -309,39 +345,15 @@
             this.toolStripButton5.Text = "开始计算";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
-            // Num
+            // toolStripButton6
             // 
-            this.Num.DataPropertyName = "Num";
-            this.Num.HeaderText = "Num";
-            this.Num.Name = "Num";
-            this.Num.ReadOnly = true;
-            // 
-            // X
-            // 
-            this.X.DataPropertyName = "X";
-            this.X.HeaderText = "X";
-            this.X.Name = "X";
-            this.X.ReadOnly = true;
-            // 
-            // Y
-            // 
-            this.Y.DataPropertyName = "Y";
-            this.Y.HeaderText = "Y";
-            this.Y.Name = "Y";
-            this.Y.ReadOnly = true;
-            // 
-            // R
-            // 
-            this.R.DataPropertyName = "R";
-            this.R.HeaderText = "R";
-            this.R.Name = "R";
-            this.R.ReadOnly = true;
-            // 
-            // Fs
-            // 
-            this.Fs.HeaderText = "Fs";
-            this.Fs.Name = "Fs";
-            this.Fs.ReadOnly = true;
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton6.Text = "测试函数";
+            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
             // MainForm
             // 
@@ -412,6 +424,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Y;
         private System.Windows.Forms.DataGridViewTextBoxColumn R;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fs;
+        private System.Windows.Forms.ToolStripButton toolStripButton6;
     }
 }
 

@@ -19,7 +19,7 @@ namespace Bishop {
         int yPos;   // 鼠标位置
         bool MoveFlag;  // 判断鼠标是否被按下
         int calc_num = 1;   // 计算次数标记 
-        double Fs_min = 999;    // 最小Fs
+        double Fs_min;    // 最小Fs
         double center_x_min;
         double center_y_min;
         double radius_min;
@@ -192,6 +192,7 @@ namespace Bishop {
         private void toolStripButton5_Click(object sender, EventArgs e) {
             // 初始化计数
             calc_num = 1;
+            Fs_min = 999;
             // 清空上一次的数据
             dataGridView1.Rows.Clear();
             // 开始计算
@@ -199,6 +200,9 @@ namespace Bishop {
         }
 
         public void ComputeBishop() {
+            // 初始化
+            
+            
             // 分条的宽度
             double Slice_width(double point_left,double point_right) {
                 double width = Math.Abs(point_right-point_left);
@@ -270,8 +274,8 @@ namespace Bishop {
 	        //  圆弧与左侧坡上地面的交点 横坐标值
             double Point_left(double center_x,double center_y, double r) {
                 double y = Setting.ShareClass.Cy;
-                double t = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0));
-                return center_x-t;
+                double temp_x = Math.Sqrt(r*r-Math.Pow((y-center_y),2.0));
+                return center_x-temp_x;
             }
 
             // 圆弧与右侧坡下地面的交点 横坐标值
@@ -283,7 +287,7 @@ namespace Bishop {
                 double Dy = Setting.ShareClass.Dy;
                 
                 if ( r <= GetMinDistance(center_x,center_y) ) {
-                    MessageBox.Show("没有交点");
+                    // MessageBox.Show("没有交点");
                     return result;
                 }
                 if (bottom == true){
@@ -295,7 +299,7 @@ namespace Bishop {
                     double a = K*K+1;
                     double b = -2*center_x+2*B*K;
                     double c = center_x*center_x+B*B-r*r;
-                    MessageBox.Show(K.ToString()+"\n"+B.ToString()+"\n"+a.ToString()+"\n"+b.ToString()+"\n"+c.ToString());
+                    // MessageBox.Show(K.ToString()+"\n"+B.ToString()+"\n"+a.ToString()+"\n"+b.ToString()+"\n"+c.ToString());
                     result = Equations1_2(a,b,c);
                 }
                 return result;
@@ -334,7 +338,7 @@ namespace Bishop {
                 double temp_x = Setting.ShareClass.CenterX;
                 result.Add(Setting.ShareClass.CenterX);
                 double delta_x = Setting.ShareClass.CenterWidth / Setting.ShareClass.SeedWidth;
-                for(int i = 1; i < Setting.ShareClass.SeedWidth; i++) {
+                for (int i = 1; i < Setting.ShareClass.SeedWidth; i++) {
                     temp_x += delta_x;
                     result.Add(temp_x);
                 }
@@ -346,7 +350,7 @@ namespace Bishop {
                 double temp_y = Setting.ShareClass.CenterY;
                 result.Add(Setting.ShareClass.CenterY);
                 double delta_y = Setting.ShareClass.CenterHeight / Setting.ShareClass.SeedHeight;
-                for(int i = 1; i < Setting.ShareClass.SeedHeight; i++) {
+                for (int i = 1; i < Setting.ShareClass.SeedHeight; i++) {
                     temp_y += delta_y;
                     result.Add(temp_y);
                 }
@@ -364,19 +368,55 @@ namespace Bishop {
                 return result;
                 
             }
-            // 测试代码
+
+            // 分条的重度 已经*了gamma 维度是N
+            List<double> slice_W(List<double> x, List<double> t,  List<double> b) {
+                List<double> result = new List<double>();
+                for (int i = 0; i < Setting.ShareClass.N; i++) {
+                    double W = CalcArea(x[i],b[i],x[i],t[i],x[i+1],t[i+1],x[i+1],b[i+1])*Setting.ShareClass.Gamma;
+                    result.Add(W);
+                }
+                return result;
+            }
+
+            // 分条中点与圆心点的夹角 维度是N
+            List<double> slice_theta(List<double> x, List<double> b, double center_x, double center_y) {
+                List<double> slice_mid_x = new List<double>();
+                List<double> slice_mid_y = new List<double>();
+                List<double> result = new List<double>();
+                for (int i = 0; i < Setting.ShareClass.N; i++) {
+                    slice_mid_x.Add((x[i]+x[i+1])/2);
+                    slice_mid_y.Add((b[i]+b[i+1])/2);
+                }
+                for (int i = 0; i < Setting.ShareClass.N; i++) {
+                    double theta = Math.Atan((center_x-slice_mid_x[i])/(center_y-slice_mid_y[i]));
+                    result.Add(theta);
+                }
+                return result; // 返回的是弧度制
+            }
+            // 角度制转弧度制
+            double DegToRad(double deg){ //角度化弧度
+                double rad = deg / 180 * Math.PI;
+                return rad;
+            }
+
+            ///////测试代码///////////////////////////////////////////////// 
             string str = "";
-            string str1 = CalcArea(0,0,0,2,2,2,2,0).ToString();
-            string str2 = Point_left(20,18,6).ToString();
+            double ans = 0;
             //foreach(double t in side_t) {
             //    str += Math.Round(t,2).ToString()+" ";
             //}
             List<double> c_x = Center_X();
             List<double> r_r =  Radius_Range();
-            foreach(double t in r_r) {
-                str += Math.Round(t,2).ToString()+" ";
+            List<double> xxx = Slice_x_axis(15,20);
+            List<double> ttt = Side_top(xxx);
+            List<double> bbb = Side_bottom(xxx,20,15,5);
+            List<double> w = slice_W(xxx,ttt,bbb);
+
+            foreach(double tt in w) {
+                ans += Math.Round(tt,4);
             }
-            MessageBox.Show(str);
+           // MessageBox.Show(ans.ToString());
             
 
             // 主计算程序
@@ -412,15 +452,34 @@ namespace Bishop {
                         // 分条宽度
                         double b = Slice_width(point_l,point_r);
                         // 分条中点与圆心点的夹角 维度N
-                        double Fs;
-                        Fs = center_x*center_y+r;
+                        List<double> theta = slice_theta(slice_x,side_b,center_x,center_y);
+                        // 分条的重度 分条面积*gamma 维度N
+                        List<double> W = slice_W(slice_x,side_t,side_b);
+                        // 求和W_i*sin(theta_i) Fs的分母
+                        double sum_W_theta = 0;
+                        for (int j = 0; j < W.Count; j++) {
+                            sum_W_theta += W[j] * Math.Sin(theta[j]);
+                        }
+                        // 迭代Fs至与上次之差小于0.1 
+                        double Fs = 1;
+		                double Fs_last = 0;
+                        while (Math.Abs(Fs - Fs_last) > 0.1) {
+                            double sum_Fs_numerator = 0;
+                            for (int i = 0; i < Setting.ShareClass.N; i++) {
+                                double m_theta = Math.Cos(theta[i]) + Math.Tan(DegToRad(Setting.ShareClass.EffectivePhi)) * Math.Sin(theta[i]) / Fs;
+                                // MessageBox.Show(m_theta.ToString());
+                                sum_Fs_numerator += (1 / m_theta) * (Setting.ShareClass.EffectiveC * b + W[i] * Math.Tan(DegToRad(Setting.ShareClass.EffectivePhi)));
+                            }
+                            Fs_last = Fs;
+                            Fs = Math.Round(sum_Fs_numerator / sum_W_theta, 3);
+                        }
                         // 添加入dataGridView1 逐行显示在Data中
                         int index = this.dataGridView1.Rows.Add();
                         this.dataGridView1.Rows[index].Cells[0].Value = calc_num;
                         this.dataGridView1.Rows[index].Cells[1].Value = center_x;
                         this.dataGridView1.Rows[index].Cells[2].Value = center_y;
                         this.dataGridView1.Rows[index].Cells[3].Value = Math.Round(R,2);
-                        this.dataGridView1.Rows[index].Cells[4].Value = Math.Round(Fs,3);
+                        this.dataGridView1.Rows[index].Cells[4].Value = Fs;
                         calc_num += 1;
                         // 找到Fs_min
                         if (Fs < Fs_min) {
@@ -441,6 +500,13 @@ namespace Bishop {
         private void 计算布种ToolStripMenuItem_Click(object sender, EventArgs e) {
             SetSeedForm setSeedForm = new SetSeedForm();
             setSeedForm.ShowDialog();
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e) {
+            double l = Math.Tan(Setting.ShareClass.EffectivePhi);
+            double tt = Math.Tan(30);
+            MessageBox.Show("l"+l.ToString());
+            MessageBox.Show("tt"+tt.ToString());
         }
     }
 }
