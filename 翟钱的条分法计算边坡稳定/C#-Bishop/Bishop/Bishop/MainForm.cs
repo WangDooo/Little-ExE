@@ -18,19 +18,25 @@ namespace Bishop {
         int xPos;   // 鼠标位置
         int yPos;   // 鼠标位置
         bool MoveFlag;  // 判断鼠标是否被按下
-        int calc_num = 1;   // 计算次数标记 
+        float LargeRatio = 15; // 图形放大系数
+        int calc_num;   // 计算次数标记 
         double Fs_min;    // 最小Fs
+        List<double> Fs_min_list = new List<double>(); // 为了统计各点Fs 画等势线
+        // 记录最小的Fs中的参数
         double center_x_min;
         double center_y_min;
         double radius_min;
-        List<double> slice_min = new List<double>();
+        List<double> slice_x_min = new List<double>();
+        List<double> t_min = new List<double>();
+        List<double> b_min = new List<double>();
 
-        // List<double> Fs_min_list = new List<double>(); // 为了统计各点Fs 画等势线
+        
 
         // 初始化分隔条的位置
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e) {
             this.dataGridView1.Width = this.splitContainer1.Panel1.Width;
         }
+        // MainForm初始化
         private void MainForm_Load(object sender, EventArgs e) {
             this.dataGridView1.Width = this.splitContainer1.Panel1.Width;
             this.MouseWheel += PictureBox1_MouseWheel; 
@@ -46,9 +52,7 @@ namespace Bishop {
             }//设置图片在窗体居中
             
         }
-
-        
-        
+  
         private void timer1_Tick(object sender, EventArgs e) {
             toolStripStatusLabel1.Text = DateTime.Now.ToShortDateString();
             toolStripStatusLabel2.Text = DateTime.Now.ToLongTimeString();
@@ -78,8 +82,7 @@ namespace Bishop {
             xPos = e.X;//当前x坐标.
             yPos = e.Y;//当前y坐标.
         }
-        
-
+        // 位图的坐标转换
         public void ConvertPoint(ref float x,ref float y){
             float Height = this.pictureBox1.Height;
             x = x + 10; // 10与边界的距离
@@ -117,26 +120,67 @@ namespace Bishop {
                 }
             }
         }
-        // dataGridView显示
-        private void toolStripButton2_Click(object sender, EventArgs e) {
-            int index = this.dataGridView1.Rows.Add();
-            this.dataGridView1.Rows[index].Cells[0].Value = Setting.ShareClass.Ax;
-            this.dataGridView1.Rows[index].Cells[1].Value = Setting.ShareClass.Ay;
-            this.dataGridView1.Rows[index].Cells[2].Value = "123RR ";
-            this.dataGridView1.Rows[index].Cells[3].Value = "123RR ";
+        // 圆心点列表 X方向
+        public List<double> Center_X() {
+            List<double> result = new List<double>();
+            double temp_x = Setting.ShareClass.CenterX;
+            result.Add(Setting.ShareClass.CenterX);
+            double delta_x = Setting.ShareClass.CenterWidth / Setting.ShareClass.SeedWidth;
+            for (int i = 1; i < Setting.ShareClass.SeedWidth; i++) {
+                temp_x += delta_x;
+                result.Add(temp_x);
+            }
+            return result;
         }
-        
-        // 绘制
-        public void DrawSlope() {
+        // 圆心点列表 Y方向
+        public List<double> Center_Y() {
+            List<double> result = new List<double>();
+            double temp_y = Setting.ShareClass.CenterY;
+            result.Add(Setting.ShareClass.CenterY);
+            double delta_y = Setting.ShareClass.CenterHeight / Setting.ShareClass.SeedHeight;
+            for (int i = 1; i < Setting.ShareClass.SeedHeight; i++) {
+                temp_y += delta_y;
+                result.Add(temp_y);
+            }
+            return result;
+        }
+        // 总的绘图程序 ///////////////////////////////////////////
+
+        public void DrawSlope_1() {
             int Height = this.pictureBox1.Height;
             int Width = this.pictureBox1.Width;
             //创建位图
             Bitmap bitmap = new Bitmap(Width, Height);
+            DrawSlope(bitmap);
+            this.pictureBox1.Image = DrawSlope(bitmap);
+        }
+        public void DrawCircleCenter_2() {
+            int Height = this.pictureBox1.Height;
+            int Width = this.pictureBox1.Width;
+            //创建位图
+            Bitmap bitmap = new Bitmap(Width, Height);
+            bitmap = DrawSlope(bitmap);
+            bitmap = DrawCircleCenter(bitmap);
+            this.pictureBox1.Image = bitmap;
+        }
+        public void DrawResult_3() {
+            int Height = this.pictureBox1.Height;
+            int Width = this.pictureBox1.Width;
+            //创建位图
+            Bitmap bitmap = new Bitmap(Width, Height);
+            bitmap = DrawSlope(bitmap);
+            bitmap = DrawCircleCenter(bitmap);
+            bitmap = DrawResult(bitmap);
+            this.pictureBox1.Image = bitmap;
+        }
+        ////////////////////////////////////////////
+        
+        // 绘制边坡
+        public Bitmap DrawSlope(Bitmap bitmap) {
             Graphics g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             Pen mypen = new Pen(Color.Black, 2);
             // 读取各点值
-            float LargeRatio = 10;
             float Ax = Setting.ShareClass.Ax * LargeRatio;
             float Ay = Setting.ShareClass.Ay * LargeRatio;
             float Bx = Setting.ShareClass.Bx * LargeRatio;
@@ -161,11 +205,89 @@ namespace Bishop {
             g.DrawLine(mypen, Dx, Dy, Ex, Ey);
             g.DrawLine(mypen, Ex, Ey, Fx, Fy);
             g.DrawLine(mypen, Fx, Fy, Ax, Ay);
-            this.pictureBox1.Image = bitmap;
+            return bitmap;
+        }
+        // 绘制圆心点
+        public Bitmap DrawCircleCenter(Bitmap bitmap) {
+            Graphics g = Graphics.FromImage(bitmap);
+            List<double> C_X = Center_X();
+            List<double> C_Y = Center_Y();
+            foreach(float cx in C_X) {
+                foreach(float cy in C_Y) {
+                    float x = cx * LargeRatio;
+                    float y = cy * LargeRatio;
+                    ConvertPoint(ref x, ref y);
+                    g.FillEllipse(Brushes.Blue, x, y, 5, 5);
+                }
+            }
+            return bitmap;
+        }
+        // 绘制计算结果 = Fs_min圆弧 + N个条分 + 各点的Fs值
+        public Bitmap DrawResult(Bitmap bitmap) {
+            Graphics g = Graphics.FromImage(bitmap);
+            //选择字体、字号、风格
+            Font font = new Font("Microsoft YaHei", 6, FontStyle.Bold);
+            Pen mypen = new Pen(Color.Green, 2);
+            Pen mypen_thin = new Pen(Color.Green, 1);
+            // 获取圆心坐标
+            int i = 0;
+            List<double> C_X = Center_X();
+            List<double> C_Y = Center_Y();
+            try {
+                // 绘制各个圆心
+                foreach(float cx in C_X) {
+                    foreach(float cy in C_Y) {
+                        float x = cx * LargeRatio;
+                        float y = cy * LargeRatio;
+                        ConvertPoint(ref x, ref y);
+                        string str = Fs_min_list[i].ToString();
+                        g.DrawString(str, font, Brushes.Black, x, y-10);
+                        i++;                  
+                    }
+                } 
+                // 绘制圆心+半径
+                float x_min = (float)(center_x_min *  LargeRatio);
+                float y_min = (float)(center_y_min *  LargeRatio);
+                ConvertPoint(ref x_min, ref y_min );
+                g.FillEllipse(Brushes.Red, x_min, y_min, 6, 6);
+                float p_left_x = (float)(slice_x_min[0]*LargeRatio);
+                float p_right_x = (float)(slice_x_min[Setting.ShareClass.N]*LargeRatio);
+                float p_left_y = (float)(t_min[0]*LargeRatio);
+                float p_right_y = (float)(t_min[Setting.ShareClass.N]*LargeRatio);
+                ConvertPoint(ref p_left_x, ref p_left_y );
+                ConvertPoint(ref p_right_x, ref p_right_y );
+                g.DrawLine(mypen, p_left_x, p_left_y, x_min, y_min);
+                g.DrawLine(mypen, p_right_x, p_right_y, x_min, y_min);
+                // 绘制圆弧
+                for(int k = 0; k < slice_x_min.Count-1; k++) {
+                    float x1 = (float)(slice_x_min[k]*LargeRatio);
+                    float y1 = (float)(b_min[k]*LargeRatio);
+                    float x2 = (float)(slice_x_min[k+1]*LargeRatio);
+                    float y2 = (float)(b_min[k+1]*LargeRatio);
+                    ConvertPoint(ref x1, ref y1 );
+                    ConvertPoint(ref x2, ref y2 );
+                    g.DrawLine(mypen, x1, y1, x2, y2);
+                }
+                // 绘制土条
+                for(int m = 1; m < slice_x_min.Count-1; m++) { 
+                    float a1 = (float)(slice_x_min[m]*LargeRatio);
+                    float b1 = (float)(t_min[m]*LargeRatio);
+                    float a2 = (float)(slice_x_min[m]*LargeRatio);
+                    float b2 = (float)(b_min[m]*LargeRatio);
+                    ConvertPoint(ref a1, ref b1 );
+                    ConvertPoint(ref a2, ref b2 );
+                    g.DrawLine(mypen_thin, a1, b1, a2, b2);
+                }
+            } catch {
+                MessageBox.Show("请先进行计算");
+                return bitmap;
+            }
+                    
+            return bitmap;
         }
         // 触发绘制边坡
         private void toolStripButton3_Click(object sender, EventArgs e) {
-            DrawSlope();
+            DrawSlope_1();
         }
         // 图片复位
         private void toolStripButton4_Click(object sender, EventArgs e) {
@@ -175,34 +297,20 @@ namespace Bishop {
             pictureBox1.Location = new Point(0, y);
         }
 
-        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e) {
-            this.Close();
-        }
+        
 
-        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutForm aboutForm = new AboutForm();
-            aboutForm.ShowDialog();
-        }
-
-        private void 土体参数ToolStripMenuItem_Click(object sender, EventArgs e) {
-            SoilParameterForm soilParameterForm = new SoilParameterForm();
-            soilParameterForm.ShowDialog();
-        }
-
-        private void toolStripButton5_Click(object sender, EventArgs e) {
-            // 初始化计数
-            calc_num = 1;
-            Fs_min = 999;
-            // 清空上一次的数据
-            dataGridView1.Rows.Clear();
+        private void toolStripButton5_Click(object sender, EventArgs e) {        
             // 开始计算
             ComputeBishop();
         }
-
         public void ComputeBishop() {
-            // 初始化
-            
-            
+            // 初始化计数
+            calc_num = 1;
+            Fs_min = 999;
+            Fs_min_list.Clear();
+            // 清空上一次的数据
+            dataGridView1.Rows.Clear();
+            //////////////////////////////////////////////////////////////  
             // 分条的宽度
             double Slice_width(double point_left,double point_right) {
                 double width = Math.Abs(point_right-point_left);
@@ -331,31 +439,7 @@ namespace Bishop {
                 }
                 return y_top;
             }
-
-            // 圆心点列表 X方向
-            List<double> Center_X() {
-                List<double> result = new List<double>();
-                double temp_x = Setting.ShareClass.CenterX;
-                result.Add(Setting.ShareClass.CenterX);
-                double delta_x = Setting.ShareClass.CenterWidth / Setting.ShareClass.SeedWidth;
-                for (int i = 1; i < Setting.ShareClass.SeedWidth; i++) {
-                    temp_x += delta_x;
-                    result.Add(temp_x);
-                }
-                return result;
-            }
-            // 圆心点列表 Y方向
-            List<double> Center_Y() {
-                List<double> result = new List<double>();
-                double temp_y = Setting.ShareClass.CenterY;
-                result.Add(Setting.ShareClass.CenterY);
-                double delta_y = Setting.ShareClass.CenterHeight / Setting.ShareClass.SeedHeight;
-                for (int i = 1; i < Setting.ShareClass.SeedHeight; i++) {
-                    temp_y += delta_y;
-                    result.Add(temp_y);
-                }
-                return result;
-            }
+   
             // 半径变化列表
             List<double> Radius_Range() {
                 List<double> result = new List<double>();
@@ -401,23 +485,6 @@ namespace Bishop {
             }
 
             ///////测试代码///////////////////////////////////////////////// 
-            string str = "";
-            double ans = 0;
-            //foreach(double t in side_t) {
-            //    str += Math.Round(t,2).ToString()+" ";
-            //}
-            List<double> c_x = Center_X();
-            List<double> r_r =  Radius_Range();
-            List<double> xxx = Slice_x_axis(15,20);
-            List<double> ttt = Side_top(xxx);
-            List<double> bbb = Side_bottom(xxx,20,15,5);
-            List<double> w = slice_W(xxx,ttt,bbb);
-
-            foreach(double tt in w) {
-                ans += Math.Round(tt,4);
-            }
-           // MessageBox.Show(ans.ToString());
-            
 
             // 主计算程序
             List<double> C_X = Center_X();
@@ -426,6 +493,7 @@ namespace Bishop {
             foreach (double center_x in C_X) {
                 foreach (double center_y in C_Y) {
                     double length_OD = Circle_radius(center_x, center_y);
+                    double Fs_min_each = 999;
                     List<double> R_List = Radius_Range();
                     foreach (double r in R_List) {
                         // 在OD的基础上对R变化
@@ -467,7 +535,6 @@ namespace Bishop {
                             double sum_Fs_numerator = 0;
                             for (int i = 0; i < Setting.ShareClass.N; i++) {
                                 double m_theta = Math.Cos(theta[i]) + Math.Tan(DegToRad(Setting.ShareClass.EffectivePhi)) * Math.Sin(theta[i]) / Fs;
-                                // MessageBox.Show(m_theta.ToString());
                                 sum_Fs_numerator += (1 / m_theta) * (Setting.ShareClass.EffectiveC * b + W[i] * Math.Tan(DegToRad(Setting.ShareClass.EffectivePhi)));
                             }
                             Fs_last = Fs;
@@ -487,8 +554,15 @@ namespace Bishop {
                             center_x_min = center_x;
                             center_y_min = center_y;
                             radius_min = Math.Round(R,2);
+                            slice_x_min = slice_x;
+                            t_min = side_t;
+                            b_min = side_b;
+                        }
+                        if (Fs < Fs_min_each){  // 为了统计各点Fs 画等势线
+			                Fs_min_each = Fs;
                         }
                     }
+                    Fs_min_list.Add(Fs_min_each);
                 }
             }
             
@@ -507,6 +581,28 @@ namespace Bishop {
             double tt = Math.Tan(30);
             MessageBox.Show("l"+l.ToString());
             MessageBox.Show("tt"+tt.ToString());
+        }
+        // 触发绘制圆心点
+        private void toolStripButton2_Click(object sender, EventArgs e) {
+            DrawCircleCenter_2();
+        }
+
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e) {
+            this.Close();
+        }
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+        }
+
+        private void 土体参数ToolStripMenuItem_Click(object sender, EventArgs e) {
+            SoilParameterForm soilParameterForm = new SoilParameterForm();
+            soilParameterForm.ShowDialog();
+        }
+
+        private void toolStripButton7_Click(object sender, EventArgs e) {
+            DrawResult_3();
         }
     }
 }

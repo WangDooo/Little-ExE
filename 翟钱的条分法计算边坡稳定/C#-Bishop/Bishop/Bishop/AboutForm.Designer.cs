@@ -46,7 +46,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(254, 180);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1. 固定边坡形状\r\n\r\n2. 绘图简易处理\r\n\r\n3. 数据导出格式未确定\r\n\r\n4. 基本设置未加密保存\r\n\r\n5. 父子窗口间传值方式待改进\r\n\r\n6. 函" +
+            this.textBox1.Text = "1. 固定边坡朝向\r\n\r\n2. 绘图简易处理\r\n\r\n3. 数据导出格式未确定\r\n\r\n4. 基本设置未加密保存\r\n\r\n5. 父子窗口间传值方式待改进\r\n\r\n6. 函" +
     "数间未设置委托和事件";
             // 
             // AboutForm

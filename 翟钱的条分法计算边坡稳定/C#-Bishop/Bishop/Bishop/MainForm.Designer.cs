@@ -52,11 +52,11 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -284,11 +284,11 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2,
             this.toolStripButton3,
+            this.toolStripButton2,
             this.toolStripButton4,
             this.toolStripButton5,
-            this.toolStripButton6});
+            this.toolStripButton7});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(984, 25);
@@ -305,16 +305,6 @@
             this.toolStripButton1.Text = "读取csv";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(64, 22);
-            this.toolStripButton2.Text = "显示AxAy";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
             // toolStripButton3
             // 
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -324,6 +314,16 @@
             this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton3.Text = "绘制边坡";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(84, 22);
+            this.toolStripButton2.Text = "绘制圆心位置";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripButton4
             // 
@@ -345,15 +345,15 @@
             this.toolStripButton5.Text = "开始计算";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
-            // toolStripButton6
+            // toolStripButton7
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton6.Text = "测试函数";
-            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(84, 22);
+            this.toolStripButton7.Text = "绘制计算结果";
+            this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
             // MainForm
             // 
@@ -415,7 +415,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
@@ -424,7 +423,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Y;
         private System.Windows.Forms.DataGridViewTextBoxColumn R;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fs;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
     }
 }
 
