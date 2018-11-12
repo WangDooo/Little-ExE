@@ -543,16 +543,16 @@ namespace Bishop {
                         // 添加入dataGridView1 逐行显示在Data中
                         int index = this.dataGridView1.Rows.Add();
                         this.dataGridView1.Rows[index].Cells[0].Value = calc_num;
-                        this.dataGridView1.Rows[index].Cells[1].Value = center_x;
-                        this.dataGridView1.Rows[index].Cells[2].Value = center_y;
+                        this.dataGridView1.Rows[index].Cells[1].Value = Math.Round(center_x,2);
+                        this.dataGridView1.Rows[index].Cells[2].Value = Math.Round(center_y,2);
                         this.dataGridView1.Rows[index].Cells[3].Value = Math.Round(R,2);
                         this.dataGridView1.Rows[index].Cells[4].Value = Fs;
                         calc_num += 1;
                         // 找到Fs_min
                         if (Fs < Fs_min) {
                             Fs_min = Math.Round(Fs,3);
-                            center_x_min = center_x;
-                            center_y_min = center_y;
+                            center_x_min = Math.Round(center_x,2);
+                            center_y_min = Math.Round(center_y,2);
                             radius_min = Math.Round(R,2);
                             slice_x_min = slice_x;
                             t_min = side_t;
@@ -603,6 +603,10 @@ namespace Bishop {
 
         private void toolStripButton7_Click(object sender, EventArgs e) {
             DrawResult_3();
+        }
+
+        private void 计算ToolStripMenuItem_Click(object sender, EventArgs e) {
+             ComputeBishop();
         }
     }
 }
