@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="pic">
+    <file>title.png</file>
+    <file>question.png</file>
+  </qresource>
+</RCC>
