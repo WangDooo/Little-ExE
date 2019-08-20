@@ -43,7 +43,7 @@ def translate_title(title_list):
 
 
 def main():
-	with open('Computers and Geotechnics _ Vol 93.html','r',encoding='utf-8') as f:
+	with open('Computers and Geotechnics _ Vol 39.html','r',encoding='utf-8') as f:
 		html = f.read()
 		soup = BeautifulSoup(html, 'lxml')
 
@@ -62,9 +62,9 @@ def main():
 
 	output_file = 'output.csv'
 	num = 1
-	vol = 107
+	vol = 39
 
-	with open(output_file,'w',newline='') as csv_out_file:
+	with open(output_file,'w',newline='',encoding='GB18030') as csv_out_file:
 		filewriter = csv.writer(csv_out_file)
 		filewriter.writerow(['序号','Vol','Title','题目','网址'])
 		for i in range(len(title_list)):
