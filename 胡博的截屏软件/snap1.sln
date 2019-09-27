@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snap1", "snap1\snap1.csproj", "{DFCF1839-8DC1-499F-9043-C9DD59B29F9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFCF1839-8DC1-499F-9043-C9DD59B29F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFCF1839-8DC1-499F-9043-C9DD59B29F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFCF1839-8DC1-499F-9043-C9DD59B29F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFCF1839-8DC1-499F-9043-C9DD59B29F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38FF9784-3F30-458D-9C9C-3AB295CFAF4D}
+	EndGlobalSection
+EndGlobal

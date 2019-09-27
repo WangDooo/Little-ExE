@@ -1,0 +1,9 @@
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\bin\Debug\snap1.exe.config
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\bin\Debug\snap1.exe
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\bin\Debug\snap1.pdb
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap.Form1.resources
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap.Properties.Resources.resources
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap1.csproj.GenerateResource.Cache
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap1.csproj.CoreCompileInputs.cache
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap1.exe
+C:\Users\123\Desktop\pic\C#\snap\snap1\snap1\obj\Debug\snap1.pdb

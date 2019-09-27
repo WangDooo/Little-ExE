@@ -1,0 +1,10 @@
+C:\Users\123\AppData\Local\Temporary Projects\snap\bin\Debug\snap.exe.config
+C:\Users\123\AppData\Local\Temporary Projects\snap\bin\Debug\snap.exe
+C:\Users\123\AppData\Local\Temporary Projects\snap\bin\Debug\snap.pdb
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.csprojResolveAssemblyReference.cache
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.Form1.resources
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.Properties.Resources.resources
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.csproj.GenerateResource.Cache
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.csproj.CoreCompileInputs.cache
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.exe
+C:\Users\123\AppData\Local\Temporary Projects\snap\obj\Debug\snap.pdb
